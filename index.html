@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <title>GLYPH ARTS </title>
+</head>
+<body>
+    
+    <nav>
+        <div class="nav-container">
+            <div class="logo" data-aos="zoom-in" data-aos-duration="1500">
+                GLYPH <span> ARTS </span>
+            </div>
+            <div class="links">
+                <div class="link" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100"><a href="index.html">Home</a></div>
+                <div class="link" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="200"><a href="shop.html">Shop</a></div>
+                <div class="link" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="300"><a href="#about">About</a></div>
+                <div class="link" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="400"><a href="#contact">Contact</a></div>
+                <i class="fa-solid fa-shopping-cart cart-icon" onclick="openCart()"></i>
+            </div>
+        </div>
+        <i class="fa-solid fa-bars hamburg" onclick="hamburg()"></i>
+        <div class="dropdown">
+            <div class="links">
+                <a href="#home">Home</a>
+                <a href="#shop">Shop</a>
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
+                <i class="fa-solid fa-xmark cancel" onclick="cancel()"></i>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home">
+        <div class="main-container">
+            <div class="content">
+                <h1 data-aos="fade-left" data-aos-duration="1500" data-aos-delay="700"> Leave Your Mark. Own a <span> GLYPH </span></h1>
+                <div data-aos="fade-right" data-aos-duration="1500" data-aos-delay="900" class="typewriter"> <span> </span><span class="typewriter-text"></span><label for="">|</label></div>
+                <p data-aos="flip-down" data-aos-duration="1500" data-aos-delay="1100">Where the minimal elegance of Black and Violet gives way to the vivid, original visions of tomorrow's student artists. GLYPTH ARTS: High-Impact Design, Personalized for You.</p>
+             
+                <div class="btn" data-aos="zoom-out" data-aos-duration="1500" data-aos-delay="1800">
+                    <a href="Profile.html"><button> Artist Profiles </button></a>
+                </div>
+            </div>
+            <div class="image" data-aos="zoom-in" data-aos-duration="3000">
+                <img src="logo.png" alt="Featured Art Piece">
+            </div>
+        </div>
+    </section>
+
+    <hr>
+    
+    <section id="shop">
+        <h2>Featured Collection</h2>
+        <div class="product-grid">
+            <div class="product-card" data-aos="fade-up" data-aos-delay="100">
+                <img src="1.png" alt="Artwork: Abstract Waves"> 
+                <h3>Left Side</h3>
+                <p>₱150.00</p>
+                <button class="add-to-cart" onclick="addToCart('Left Side', '₱150.00')">Add to Cart</button>
+            </div>
+
+            <div class="product-card" data-aos="fade-up" data-aos-delay="300">
+                <img src="1.1.png" alt="Artwork: Forest Spirit">
+                <h3>Right Side</h3>
+                <p>₱280.00</p>
+                <button class="add-to-cart" onclick="addToCart('Right Side', '₱280.00')">Add to Cart</button>
+            </div>
+
+            <div class="product-card" data-aos="fade-up" data-aos-delay="500">
+                <img src="2.png" alt="Artwork: Neon Cityscape">
+                <h3>Match on Face</h3>
+                <p>₱195.00</p>
+                <button class="add-to-cart" onclick="addToCart('Match on Face', '₱195.00')">Add to Cart</button>
+            </div>
+        </div>
+        
+        <div class="shop-action-container">
+            <a href="shop.html"><button>View All Items</button></a>
+        </div>
+    </section>
+    
+    <section id="about" style="min-height: 50vh; color: white; text-align: center; padding: 50px;">
+        <h2>About GLYPH ARTS</h2>
+        <p>The GLYPTH ARTS website functions as a contemporary online marketplace and portfolio for a student artist<br>
+            collective focused on high-impact, original artwork. The site is characterized by a sleek, modern aesthetic <br> 
+            featuring minimalist design dominated by a striking Black and Violet color palette. <br>
+            Its primary purpose is to showcase and sell diverse pieces, including digital works like <br>
+            "Neon Cityscape" and "Abstract Waves," while promoting the collective's mission: delivering <br> 
+            "High-Impact Design, Personalized for You" by "tomorrow's student artists".<br>
+             The website is structured to facilitate commerce, offering a Featured Collection, <br> 
+              dedicated Artist Profiles, and a functional cart and checkout system.</p>
+    </section>
+
+    <hr>
+    
+    <section id="contact" style="min-height: 50vh; color: white; text-align: center; padding: 50px;">
+        <h2>Contact Us for Commission </h2>
+        <div class="social-links">
+             <a data-aos="fade-up" data-aos-duration="1500" data-aos-delay="1300" href="https://www.tiktok.com/@glyptharts?is_from_webapp=1&sender_device=pc"><i class="fa-brands fa-tiktok" title="Etsy Shop"></i></a>
+             <a href="https://www.instagram.com/glyptharts?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="1400"><i class="fa-brands fa-instagram" title="Instagram Gallery"></i></a>
+             <a href="https://www.facebook.com/profile.php?id=61584281885669&rdid=qP92yvM0Eaw3aZhE&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1CydUyLHw1%2F" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="1500"><i class="fa-brands fa-facebook" title="Pinterest Portfolio"></i></a>
+
+            
+        </div>
+    </section>
+    
+
+    <div id="cartModal" class="cart-modal">
+        <div class="cart-content">
+            <span class="cart-close" onclick="closeCart()">&times;</span>
+            
+            <div id="cart-view">
+                <h2>Your Shopping Cart</h2>
+                
+                <div id="cart-items-container">
+                    </div>
+                
+                <div class="empty-cart-message">
+                    <i class="fa-solid fa-basket-shopping"></i> Your cart is empty.
+                    <br>
+                    (Add some art!)
+                </div>
+                
+                <button class="checkout-btn" onclick="showCheckoutForm()">Proceed to Checkout</button>
+            </div>
+            
+            <div id="checkout-form-container">
+                <h2>Shipping & Contact Details</h2>
+                <form action="https://formspree.io/f/xwpdyjqp" method="POST">
+                    
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" required placeholder="John Doe">
+                    
+                    <label for="contact">Contact Number</label>
+                    <input type="tel" id="contact" name="contact" required placeholder="(123) 456-7890">
+                    
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="_replyto" required placeholder="john@example.com">
+
+                    <label for="address">Shipping Address</label>
+                    <textarea id="address" name="address" rows="3" required placeholder="123 Art Street, City, Country"></textarea>
+                    
+                    <button type="submit" class="submit-order-btn">Submit Order & Pay (Demo)</button>
+                    <button type="button" class="checkout-btn" style="background-color: #333; margin-top: 10px;" onclick="showCartView()">Back to Cart</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="script.js"></script>
+    
+    
+</body>
+</html>

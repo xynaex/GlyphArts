@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artist Profiles Only - GLYPTH ARTS</title>
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600&display=swap');
+
+        
+        :root {
+            --accent-color: purple;
+            --secondary-accent: violet;
+        }
+
+        
+        * {
+            padding: 0;
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            width: 100%;
+            background-color: black;
+            color: white;
+            min-height: 100vh;
+        }
+
+       
+        nav {
+            width: 100%;
+            height: 10vh;
+            position: sticky;
+            top: 0;
+            z-index: 50; 
+            background-color: rgba(0, 0, 0, 0.95); 
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .nav-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .logo {
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: var(--accent-color);
+            text-shadow: 0 0 10px var(--accent-color);
+        }
+
+        .hamburg,
+        .cancel {
+            cursor: pointer;
+            position: absolute;
+            right: 15px;
+            top: 10px;
+            color: white;
+            display: none; 
+            font-size: clamp(2.5rem, 0.5rem + 5vw, 3rem);
+        }
+
+        .nav-container .links {
+            display: flex;
+        }
+
+        .nav-container .links a {
+            font-size: 1.2rem;
+            color: white;
+            margin: 0 20px;
+            text-decoration: none;
+            font-weight: 550;
+            transition: 0.3s linear;
+        }
+
+        .nav-container .links a:hover {
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .dropdown {
+            z-index: 100;
+            position: absolute;
+            top: 0;
+            transform: translateY(-500px);
+            width: 100%;
+            height: auto;
+            backdrop-filter: blur(4px) brightness(40%);
+            box-shadow: 0 0 20px black;
+            transition: 0.2s linear;
+        }
+
+        .dropdown .links a {
+            display: flex;
+            color: white;
+            text-decoration: none;
+            padding: 15px 0;
+            justify-content: center;
+            align-items: center;
+            transition: 0.2s linear;
+        }
+
+        .dropdown .links a:hover {
+            background-color: var(--accent-color);
+        }
+        
+        .cart-icon {
+            color: white;
+            font-size: 1.5rem;
+            margin-left: 20px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .cart-icon:hover {
+            color: var(--accent-color);
+            transform: scale(1.1);
+        }
+        
+       
+        #profiles {
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        #profiles h2 {
+            font-size: 2.5rem;
+            color: white;
+            margin-bottom: 40px;
+            text-shadow: 0 0 10px white;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 15px;
+            display: inline-block;
+        }
+
+        .profile-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+            max-width: 1200px;
+            margin: 30px auto;
+        }
+
+        .artist-card img {
+            width: 100%; 
+            height: auto;
+            max-height: 250px; 
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .artist-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(128, 0, 128, 0.5); 
+            padding: 30px;
+            width: 350px;
+            text-align: left;
+            transition: all 0.3s;
+        }
+
+        .artist-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px var(--secondary-accent);
+            border: 1px solid var(--secondary-accent);
+        }
+
+        .artist-card h3 {
+            color: var(--accent-color);
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .artist-card h4 {
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 400;
+            margin-bottom: 15px;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.3);
+            padding-bottom: 10px;
+        }
+
+        .artist-card p {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: #ddd;
+        }
+
+       
+        @media (max-width:884px) {
+            nav .logo {
+                position: absolute;
+                top: 16px;
+                left: 15px;
+                font-size: 1.5rem;
+            }
+            .nav-container .links {
+                display: none;
+            }
+            .hamburg {
+                display: block;
+            }
+        }
+        @media (max-width:440px) {
+            .artist-card {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <nav>
+        <div class="nav-container">
+            <div class="logo">
+                GLYPTH <span> ARTS </span>
+            </div>
+            <div class="links">
+                <div class="link"><a href="index.html">Home</a></div>
+                <div class="link"><a href="shop.html">Shop</a></div>
+                <div class="link"><a href="index.html#about">About</a></div>
+                <div class="link"><a href="index.html#contact">Contact</a></div>
+                <i class="fa-solid fa-shopping-cart cart-icon"></i>
+            </div>
+        </div>
+        <i class="fa-solid fa-bars hamburg" onclick="hamburg()"></i>
+        <div class="dropdown">
+            <div class="links">
+                <a href="#home">Home</a>
+                <a href="#shop">Shop</a>
+                <a href="#profiles">Artists</a>
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
+                <i class="fa-solid fa-xmark cancel" onclick="cancel()"></i>
+            </div>
+        </div>
+    </nav>
+    <section id="home" style="min-height: 5vh; background-color: #111; padding: 20px; text-align: center;">
+        <h1 style="color:white; font-size: 1.5rem;">Welcome to GLYPTH ARTS</h1>
+    </section>
+
+    <section id="profiles">
+        <h2 data-aos="zoom-in">Meet the Creators</h2>
+        <div class="profile-container">
+            
+            <div class="artist-card" data-aos="fade-right" data-aos-delay="100">
+                <img src="delfin.jpg" alt="Artist Name 1 Profile Pic Placeholder">
+                <h3>Delfin Canicosa</h3>
+                <h4>BMMA - 504</h4>
+                <p>
+                    I am Delfin Canicosa a digital artist who brings ideas and emotions to life through thoughtful drawings and expressive imagery. My work focuses on creativity, detail, expressions, and storytelling, creating pieces that connect with people and inspire emotion.    
+                </p>
+            </div>
+
+            <div class="artist-card" data-aos="fade-up" data-aos-delay="300">
+                <img src="me.jpg" alt="Artist Name 2 Profile Pic Placeholder">
+                <h3>Nico Mallorca</h3>
+                <h4>BMMA - 504 </h4>
+                <p>
+                 I'm Nico Mallorca a visual artist and student of Multimedia Arts, skilled in bridging the gap between two dimensions and three. My work begins with powerful digital art concepts, which I then translate into fully realized, ready-to-use assets through detailed 3D modeling and expressive 3D animation. I'm passionate about the entire process, from concept to final render.
+                </p>
+            </div>
+
+            <div class="artist-card" data-aos="fade-left" data-aos-delay="500">
+                <img src="marky.webp" alt="Artist Name 3 Profile Pic Placeholder">
+                <h3>Mark Andrey Calivoso </h3>
+                <h4> BMMA - 504 </h4>
+                <p>
+                    I am Mark Andrey Calivoso and I am an artist who enjoys being creative and trying different hobbies. I like exploring new ideas and working with different forms of art. I put effort into everything I create and enjoy learning new skills, that is why Art helps me express myself.   
+                </p>
+            </div>
+
+             <div class="artist-card" data-aos="fade-left" data-aos-delay="500">
+                <img src="rain.jpg" alt="Artist Name 3 Profile Pic Placeholder">
+                <h3> Rain Daniel Gonzaga </h3>
+                <h4>BMMA - 504 </h4>
+                <p>
+                     A versatile creator, the artist blends digital and traditional techniques to produce balanced, thoughtfully crafted works. Specializing in black-and-white palettes, my art highlights contrast, depth, and emotion through refined shading and minimalist tones. Whether working digitally or with traditional mediums, my pieces emphasize structure, atmosphere, and expressive detail. Available for Portrait, Concept Art, and Custom Illustration commissions.
+                 </p>
+            </div>
+
+             <div class="artist-card" data-aos="fade-left" data-aos-delay="500">
+                <img src="heidi.jpg" alt="Artist Name 3 Profile Pic Placeholder">
+                <h3> Heidi Binos </h3>
+                <h4> BMMA - 504 </h4>
+                <p>
+                        Heidi P. Binos, a 22-year-old artist with a love for all things cute and colorful! My artistic journey is fueled by a passion for drawing, painting with watercolors, and creating digital illustrations. I especially enjoy bringing characters to life in the adorable chibi style, using dreamy pastel palettes, and adding a touch of whimsy to everything I create. Korean manhwa and anime have always been a huge inspiration to me, and I love incorporating those stylistic elements into my artwork. Color theory is my secret weapon – I believe the right colors can evoke emotions and tell stories all on their own. While I'm most comfortable creating stylized art, I'm always eager to learn and grow, and I'm currently exploring new ways to refine my semi-realistic techniques. Ultimately, my goal is to share my art with the world and spread a little bit of joy through every piece I create.
+
+                </p>
+            </div>
+            
+        </div>
+    
+
+
+    
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+       
+        AOS.init({offset: 0,});
+
+   
+        function hamburg(){
+            const navbar = document.querySelector(".dropdown")
+            navbar.style.transform = "translateY(0px)"
+        }
+        function cancel(){
+            const navbar = document.querySelector(".dropdown")
+            navbar.style.transform = "translateY(-500px)"
+        }
+        
+       
+        document.addEventListener('DOMContentLoaded', () => {
+            const dropdown = document.querySelector(".dropdown");
+            window.addEventListener('resize', () => {
+                if (window.innerWidth > 884) {
+                    dropdown.style.transform = "translateY(-500px)";
+                }
+            });
+        });
+    </script>
+</body>
+</html>

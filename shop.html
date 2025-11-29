@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>GLYPTH ARTS - Multi-Step Checkout</title>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600&display=swap');
+
+        
+        * {
+            padding: 0;
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: black;
+            color: white;
+            min-height: 100vh;
+            padding-top: 70px; 
+        }
+
+        
+        :root {
+            --accent-color: purple;
+            --dark-bg: rgb(20, 20, 20);
+        }
+        
+     
+        nav {
+            width: 100%;
+            height: 60px;
+            position: fixed; 
+            top: 0;
+            left: 0;
+            z-index: 50;
+            background-color: rgba(0, 0, 0, 0.95);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+        
+        .nav-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            color: white;
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: var(--accent-color);
+            text-shadow: 0 0 5px var(--accent-color);
+        }
+        
+        .links {
+            display: flex;
+            align-items: center;
+        }
+        
+        .links a {
+            font-size: 1rem;
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.3s linear;
+        }
+        
+        .links a:hover {
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--accent-color);
+        }
+        
+        .cart-icon {
+            font-size: 1.4rem;
+            color: white;
+            margin-left: 20px;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .cart-icon:hover {
+            color: var(--accent-color);
+        }
+
+        #shop {
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        #shop h2 {
+            font-size: 3.5rem;
+            color: white;
+            margin-bottom: 50px;
+            text-shadow: 0 0 15px var(--accent-color);
+        }
+
+        .product-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .product-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            box-shadow: 0 0 15px purple;
+            padding: 20px;
+            width: 300px;
+            text-align: left;
+            transition: transform 0.3s;
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        .product-card h3 {
+            font-size: 1.5rem;
+            color: whitesmoke;
+        }
+
+        .product-card .price {
+            display: block;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .product-card .add-to-cart {
+            width: 100%;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 10px 0;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.2s;
+        }
+
+        .product-card .add-to-cart:hover {
+            background-color: violet;
+        }
+
+        
+        .modal {
+            display: none; 
+            position: fixed;
+            z-index: 200;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: black;
+            border: 2px solid var(--accent-color);
+            margin: 5% auto; 
+            padding: 20px;
+            width: 90%;
+            max-width: 600px;
+            border-radius: 10px;
+            box-shadow: 0 0 40px violet;
+            color: white;
+            position: relative;
+        }
+
+        .modal-content h2 {
+            color: var(--accent-color);
+        }
+
+        .modal-close {
+            color: white;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        
+        .modal-close:hover {
+            color: var(--accent-color);
+        }
+
+        #cartItemsContainer {
+            max-height: 250px;
+            overflow-y: auto;
+            margin-bottom: 10px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.2);
+            font-size: 0.95rem;
+        }
+
+        .total-display {
+            margin-top: 20px; 
+            font-size: 1.5rem; 
+            font-weight: bold; 
+            text-align: right;
+            border-top: 2px solid var(--accent-color);
+            padding-top: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .empty-cart-message {
+            padding: 20px;
+            border: 1px dashed var(--accent-color);
+            border-radius: 5px;
+            text-align: center;
+        }
+        
+        
+
+        #detailsModal .modal-content {
+            padding: 40px 30px; 
+            max-width: 500px; 
+        }
+        
+        .details-title {
+            color: var(--accent-color);
+            margin-bottom: 25px;
+            font-size: 2rem;
+            font-weight: 600;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #ccc;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 4px;
+            background-color: var(--dark-bg);
+            color: white;
+            font-size: 1rem;
+            
+            
+            
+            border: 1px solid var(--accent-color); 
+            box-shadow: 0 0 5px rgba(211, 3, 3, 0.2);
+            resize: vertical;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: white;
+            box-shadow: 0 0 8px var(--accent-color);
+        }
+        
+        .checkout-btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 5px;
+            margin-top: 20px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.2s;
+        }
+        
+        
+        .btn-submit {
+            background-color: rgb(3, 179, 3);
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .btn-submit:hover {
+            background-color: rgb(1, 131, 1);
+        }
+        
+        
+        .btn-back {
+            background-color: #333;
+            color: white;
+        }
+
+        .btn-back:hover {
+            background-color: #555;
+        }
+
+    </style>
+</head>
+<body>
+    
+    <nav>
+        <div class="nav-container">
+            <div class="logo">
+                GLYPTH <span> ARTS </span>
+            </div>
+            <div class="links">
+                <a href="index.html">Home</a> 
+                <a href="shop.html">Shop</a>
+                <a href="index.html#about">About</a>
+                <a href="index.html#contact">Contact</a>
+                <i class="fa-solid fa-shopping-cart cart-icon" onclick="openCart()"></i>
+            </div>
+        </div>
+    </nav>
+    
+    <section id="shop">
+        <h2>Products </h2>
+        
+        <div class="product-grid">
+            <div class="product-card">
+                <img src="1.png" alt="Abstract Waves Painting"> 
+                <h3> Left Side </h3>
+                <span class="price">₱150.00</span>
+                <button class="add-to-cart" onclick="addToCart('Abstract Waves', 150.00)">Add to Cart</button>
+            </div>
+
+            <div class="product-card">
+                <img src="1.1.png" alt="Forest Spirit Illustration">
+                <h3> Right Side </h3>
+                <span class="price">₱280.00</span>
+                <button class="add-to-cart" onclick="addToCart('Forest Spirit', 280.00)">Add to Cart</button>
+            </div>
+
+            <div class="product-card">
+                <img src="2.png" alt="Neon Cityscape Digital Art">
+                <h3>Match on Face </h3>
+                <span class="price">₱195.00</span>
+                <button class="add-to-cart" onclick="addToCart('Neon Cityscape', 195.00)">Add to Cart</button>
+            </div>
+            
+            <div class="product-card">
+                <img src="10.png" alt="Desert Bloom Watercolour">
+                <h3> Purple Eye</h3>
+                <span class="price">₱99.00</span>
+                <button class="add-to-cart" onclick="addToCart('Desert Bloom', 99.00)">Add to Cart</button>
+            </div>
+
+            <div class="product-card">
+                <img src="7.png" alt="Forest Spirit Illustration">
+                <h3> Wild Spirit</h3>
+                <span class="price">₱280.00</span>
+                <button class="add-to-cart" onclick="addToCart('Forest Spirit', 280.00)">Add to Cart</button>
+            </div>
+
+            <div class="product-card">
+                <img src="8.png" alt="Neon Cityscape Digital Art">
+                <h3>Fireworks</h3>
+                <span class="price">₱195.00</span>
+                <button class="add-to-cart" onclick="addToCart('Neon Cityscape', 195.00)">Add to Cart</button>
+            </div>
+            
+            <div class="product-card">
+                <img src="4.png" alt="Desert Bloom Watercolour">
+                <h3>Aespa Karina </h3>
+                <span class="price">₱99.00</span>
+                <button class="add-to-cart" onclick="addToCart('Desert Bloom', 99.00)">Add to Cart</button>
+            </div>
+
+            <div class="product-card">
+                <img src="5.png" alt="Forest Spirit Illustration">
+                <h3>Smoke</h3>
+                <span class="price">₱280.00</span>
+                <button class="add-to-cart" onclick="addToCart('Forest Spirit', 280.00)">Add to Cart</button>
+            </div>
+
+            <div class="product-card">
+                <img src="6.png" alt="Neon Cityscape Digital Art">
+                <h3>Svt DK</h3>
+                <span class="price">₱195.00</span>
+                <button class="add-to-cart" onclick="addToCart('Neon Cityscape', 195.00)">Add to Cart</button>
+            </div>
+            
+            <div class="product-card">
+                <img src="11.png" alt="Desert Bloom Watercolour">
+                <h3>Unique Eyes </h3>
+                <span class="price">₱99.00</span>
+                <button class="add-to-cart" onclick="addToCart('Desert Bloom', 99.00)">Add to Cart</button>
+            </div>
+
+            <div class="product-card">
+                <img src="12.png" alt="Forest Spirit Illustration">
+                <h3> Mafia </h3>
+                <span class="price">₱280.00</span>
+                <button class="add-to-cart" onclick="addToCart('Forest Spirit', 280.00)">Add to Cart</button>
+            </div>
+
+            <div class="product-card">
+                <img src="  .png" alt="Neon Cityscape Digital Art">
+                <h3> Glimpse </h3>
+                <span class="price">₱195.00</span>
+                <button class="add-to-cart" onclick="addToCart('Neon Cityscape', 195.00)">Add to Cart</button>
+            </div>
+
+
+            <div class="product-card">
+                <img src="17.png" alt="Forest Spirit Illustration">
+                <h3>Spiral</h3>
+                <span class="price">₱280.00</span>
+                <button class="add-to-cart" onclick="addToCart('Forest Spirit', 280.00)">Add to Cart</button>
+            </div>
+
+            <div class="product-card">
+                <img src="18.png" alt="Neon Cityscape Digital Art">
+                <h3>Minions</h3>
+                <span class="price">₱195.00</span>
+                <button class="add-to-cart" onclick="addToCart('Neon Cityscape', 195.00)">Add to Cart</button>
+            </div>
+            
+            <div class="product-card">
+                <img src="19.jpeg" alt="Desert Bloom Watercolour">
+                <h3>Poster</h3>
+                <span class="price">₱99.00</span>
+                <button class="add-to-cart" onclick="addToCart('Desert Bloom', 99.00)">Add to Cart</button>
+            </div>
+
+            <div class="product-card">
+                <img src="20.heic" alt="Forest Spirit Illustration">
+                <h3>Human Rat</h3>
+                <span class="price">₱280.00</span>
+                <button class="add-to-cart" onclick="addToCart('Forest Spirit', 280.00)">Add to Cart</button>
+            </div>
+            <div class="product-card">
+                <img src="21.png" alt="Desert Bloom Watercolour">
+                <h3>NewJ Hanni</h3>
+                <span class="price">₱99.00</span>
+                <button class="add-to-cart" onclick="addToCart('Desert Bloom', 99.00)">Add to Cart</button>
+            </div>
+
+            <div class="product-card">
+                <img src="22.png" alt="Forest Spirit Illustration">
+                <h3>Longing</h3>
+                <span class="price">₱280.00</span>
+                <button class="add-to-cart" onclick="addToCart('Forest Spirit', 280.00)">Add to Cart</button>
+            </div>
+
+
+            
+            
+            
+        </div>
+    </section>
+
+    <div id="cartModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeCart()">&times;</span>
+            <h2>Your Shopping Cart</h2>
+            
+            <div id="cartItemsContainer">
+                </div>
+
+            <div id="emptyCartMessage" class="empty-cart-message">
+                <i class="fa-solid fa-basket-shopping"></i> Your cart is empty.
+            </div>
+            
+            <div id="cartTotal" class="total-display">
+                </div>
+            
+            <button class="checkout-btn" id="proceedBtn" onclick="openDetailsModal()">
+                Proceed to Shipping Details
+            </button>
+        </div>
+    </div>
+    
+    <div id="detailsModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeDetails()">&times;</span>
+            <div class="details-title">Shipping & Contact Details</div>
+            
+            <form id="checkoutForm" action="https://formspree.io/f/xwpdyjqp" method="POST">
+                
+                <input type="hidden" name="cart_total" id="cart-total-input" value="">
+                
+                <input type="hidden" name="order_details" id="order-details-input" value="">
+
+                <div class="form-group">
+                    <label for="customerName">Full Name</label>
+                    <input type="text" id="customerName" name="customer_name" placeholder="John Doe" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="customerContact">Contact Number</label>
+                    <input type="text" id="customerContact" name="contact_number" placeholder="(123) 456-7890">
+                </div>
+                
+                <div class="form-group">
+                    <label for="customerEmail">Email Address</label>
+                    <input type="email" id="customerEmail" name="_replyto" placeholder="john@example.com" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="customerAddress">Shipping Address</label>
+                    <textarea id="customerAddress" name="shipping_address" rows="3" placeholder="123 Art Street, City, Country" required></textarea>
+                </div>
+                
+                <button type="submit" class="checkout-btn btn-submit">
+                    Submit Order
+                </button>
+                
+            </form>
+            <button class="checkout-btn btn-back" onclick="backToCart()">
+                Back to Cart
+            </button>
+        </div>
+    </div>
+    
+    <script>
+        
+        let cart = [];
+
+        function addToCart(productName, productPrice) {
+            const existingItem = cart.find(item => item.name === productName);
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                const product = { name: productName, price: productPrice, quantity: 1 };
+                cart.push(product);
+            }
+            renderCart();
+            openCart();
+        }
+
+        function renderCart() {
+            const cartContainer = document.getElementById('cartItemsContainer');
+            const totalElement = document.getElementById('cartTotal');
+            const emptyMessage = document.getElementById('emptyCartMessage');
+            const proceedBtn = document.getElementById('proceedBtn');
+            
+            cartContainer.innerHTML = ''; 
+            let total = 0;
+
+            if (cart.length === 0) {
+                emptyMessage.style.display = 'block';
+                cartContainer.style.display = 'none';
+                totalElement.style.display = 'none';
+                proceedBtn.disabled = true;
+                proceedBtn.style.opacity = 0.5;
+                
+            } else {
+                emptyMessage.style.display = 'none';
+                cartContainer.style.display = 'block';
+                totalElement.style.display = 'block';
+                proceedBtn.disabled = false;
+                proceedBtn.style.opacity = 1;
+
+                cart.forEach((item, index) => {
+                    const itemDiv = document.createElement('div');
+                    itemDiv.classList.add('cart-item');
+                    const itemSubtotal = item.price * item.quantity;
+                    total += itemSubtotal; 
+                    
+                    itemDiv.innerHTML = `
+                        <p><strong>${item.name}</strong> (x${item.quantity})</p>
+                        <p>
+                            <button onclick="changeQuantity(${index}, -1)" class="remove-btn" title="Decrease Quantity">-</button>
+                            <button onclick="changeQuantity(${index}, 1)" class="remove-btn" title="Increase Quantity">+</button>
+                            ₱${itemSubtotal.toFixed(2)} 
+                            <button onclick="removeItemFromCart(${index})" class="remove-btn" title="Remove Item"><i class="fa-solid fa-trash-can"></i></button>
+                        </p>
+                    `;
+                    cartContainer.appendChild(itemDiv);
+                });
+
+                totalElement.textContent = `Total: ₱${total.toFixed(2)}`;
+            }
+        }
+        
+        function changeQuantity(index, delta) {
+            if (cart[index]) {
+                cart[index].quantity += delta;
+                if (cart[index].quantity <= 0) {
+                    cart.splice(index, 1);
+                }
+                renderCart(); 
+            }
+        }
+
+        function removeItemFromCart(index) {
+            cart.splice(index, 1);
+            renderCart(); 
+        }
+
+        
+        
+        function prepareOrderData(event) {
+          
+            const totalText = document.getElementById('cartTotal').textContent; 
+            let cartSummary = "";
+
+            if (cart.length > 0) {
+                
+                cartSummary = cart.map(item => 
+                    `\n- ${item.name} (Qty: ${item.quantity}) @ ₱${item.price.toFixed(2)}`
+                ).join('');
+                
+              
+                cartSummary = "--- ITEMS ORDERED ---\n" + cartSummary;
+            }
+            
+           
+            document.getElementById('cart-total-input').value = totalText;
+            document.getElementById('order-details-input').value = cartSummary;
+            
+        
+        }
+        
+      
+        document.getElementById('checkoutForm').addEventListener('submit', prepareOrderData);
+
+
+        
+        function openCart() {
+            renderCart();
+            document.getElementById('cartModal').style.display = 'block';
+        }
+
+        function closeCart() {
+            document.getElementById('cartModal').style.display = 'none';
+        }
+
+     
+        function openDetailsModal() {
+            if (cart.length === 0) return;
+            closeCart();
+            document.getElementById('detailsModal').style.display = 'block';
+        }
+
+        function closeDetails() {
+            document.getElementById('detailsModal').style.display = 'none';
+        }
+
+        function backToCart() {
+            closeDetails();
+            openCart();
+        }
+        
+        document.addEventListener('DOMContentLoaded', renderCart);
+    </script>
+</body>
+</html>
